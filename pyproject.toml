@@ -1,0 +1,20 @@
+[project]
+name = "onco-segment"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flake8>=7.3.0",
+    "kagglehub>=1.0.1",
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.6",
+    "opencv-python-headless>=4.13.0.92",
+    "pandas>=3.0.3",
+    "pip>=26.1.1",
+    "pytest>=9.0.3",
+    "python-dotenv>=1.2.2",
+    "segmentation-models-pytorch>=0.5.0",
+    "torch>=2.12.0",
+    "torchvision>=0.27.0",
+]
