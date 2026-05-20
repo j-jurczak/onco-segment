@@ -4,7 +4,7 @@ Code to create visualizations
 
 from pathlib import Path
 
-from src.config import PROCESSED_DATA_DIR, FIGURES_DIR
+from src.config import FIGURES_DIR, PROCESSED_DATA_DIR
 
 
 def main(
