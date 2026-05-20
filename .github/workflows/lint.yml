@@ -2,8 +2,6 @@ name: Ruff Linter
 
 on:
   push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
