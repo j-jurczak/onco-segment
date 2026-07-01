@@ -177,4 +177,8 @@ cython_debug/
 .pypirc
 
 # project data
-data/
+data/raw/
+data/processed/
+
+# models
+/models/*.pth
