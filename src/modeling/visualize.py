@@ -45,7 +45,7 @@ def visualize_predictions(architecture="unet", encoder="resnet34", num_images=5)
     fig, axes = plt.subplots(num_images, 4, figsize=(16, 4 * num_images))
 
     cols = ['USG', "Doctor's Mask (Ground Truth)", 'AI Mask', 'Overlay (Yellow = Hit)']
-    for ax, col in zip(axes[0], cols):
+    for ax, col in zip(axes[0], cols, strict=True):
         ax.set_title(col, size=14, fontweight='bold')
 
     for i in range(num_images):
