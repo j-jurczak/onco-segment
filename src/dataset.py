@@ -8,6 +8,8 @@ import shutil
 from pathlib import Path
 
 import kagglehub
+import numpy as np
+import torch
 from PIL import Image
 from torch.utils.data import Dataset
 
@@ -25,15 +27,26 @@ class BUSIDataset(Dataset):
 
     def __getitem__(self, idx):
         img_path = self.base_dir / self.filenames[idx]
-
         mask_path = Path(str(img_path).replace(".png", "_mask.png"))
 
-        image = Image.open(img_path).convert("RGB")
-        mask = Image.open(mask_path).convert("L")
+        image = np.array(Image.open(img_path).convert("RGB"))
+
+        mask = np.array(Image.open(mask_path).convert("L"), dtype=np.float32)
+        mask = mask / 255.0
 
         if self.transform:
-            image = self.transform(image)
-            mask = self.transform(mask)
+            augmented = self.transform(image=image, mask=mask)
+            image = augmented["image"]
+            mask = augmented["mask"]
+
+        if not isinstance(mask, torch.Tensor):
+            mask = torch.tensor(mask, dtype=torch.float32)
+
+        if not isinstance(image, torch.Tensor):
+            image = torch.tensor(image.transpose(2, 0, 1), dtype=torch.float32)
+
+        if mask.ndim == 2:
+            mask = mask.unsqueeze(0)
 
         mask = (mask > 0.5).float()
 
@@ -41,7 +54,6 @@ class BUSIDataset(Dataset):
 
 
 def download_data():
-
     download_path = kagglehub.dataset_download(
         "aryashah2k/breast-ultrasound-images-dataset"
     )
