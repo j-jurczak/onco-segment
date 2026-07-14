@@ -46,7 +46,10 @@ def train_model(
     print("init model")
     model = create_segmentation_model(architecture, encoder)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() 
+                          else "mps" if torch.mps.is_available()
+                          else "cpu")
+
     model.to(device)
 
     criterion = smp.losses.DiceLoss(mode="binary", from_logits=True)
